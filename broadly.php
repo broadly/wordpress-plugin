@@ -2,7 +2,7 @@
 /*
   Plugin Name: Broadly WordPress Plugin
   Plugin URI: http://broadly.com
-  Version: 1.0.3
+  Version: 1.0.4
   Description: Easily integrate Broadly.com reviews into your WordPress site!
   Author: Tyler Longren
   Author URI: https://impavidmedia.com/contact/
