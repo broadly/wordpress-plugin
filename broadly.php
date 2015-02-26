@@ -18,8 +18,11 @@ function get_broadly($atts) {
   $account_id = esc_attr(get_option('broadly_account_id'));
 
   extract(shortcode_atts(array(
+
       'embed' => 'reviews',
+
       'options' => null
+
    ), $atts));
 
   if ( !empty($account_id) && !is_admin() ) {
@@ -33,7 +36,9 @@ function get_broadly($atts) {
     if ( class_exists( 'WP_Http' ) ) {
 
       $args = array(
+
         'sslverify' => true
+
       );
 
       $resp = wp_remote_request( $url, $args );
@@ -54,11 +59,21 @@ function get_broadly($atts) {
     
     else { // if no WP_Http class, fall back to js embed
 
-      $content = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/embed/' . $url_options . '"></script>';
+      $js = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
 
     }
 
-    return $content; // return the HTML
+    if (isset($js)) {
+
+      echo $js;
+
+    }
+
+    else {
+
+      return $content; // return the HTML
+
+    }
 
   }
 
