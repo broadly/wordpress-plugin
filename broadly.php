@@ -38,7 +38,7 @@ function get_broadly($atts) {
     if (isset($options)) {
 
       $url_options = $account_id . '/' . $embed . '?' . $options;
-      
+
     }
 
     $url = $url_prefix.$url_options;
@@ -61,7 +61,7 @@ function get_broadly($atts) {
 
       else {
 
-        $content = "There was an error establishing a connection to the API, please try again in a few minutes.";
+        $content = null;
 
       }
 
