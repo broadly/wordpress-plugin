@@ -43,6 +43,8 @@ function get_broadly($atts) {
 
     $url = $url_prefix.$url_options;
 
+    $js = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
+
     if ( class_exists( 'WP_Http' ) ) {
 
       $args = array(
@@ -61,7 +63,7 @@ function get_broadly($atts) {
 
       else {
 
-        $content = null;
+        return $js;
 
       }
 
@@ -69,21 +71,11 @@ function get_broadly($atts) {
     
     else { // if no WP_Http class, fall back to js embed
 
-      $js = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
+      $content = $js;
 
     }
 
-    if (isset($js)) {
-
-      echo $js;
-
-    }
-
-    else {
-
-      return $content; // return the HTML
-
-    }
+    return $content;
 
   }
 
