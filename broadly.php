@@ -43,7 +43,7 @@ function get_broadly($atts) {
 
     $url = $url_prefix.$url_options;
 
-    $js = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
+    $content = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
 
     if ( class_exists( 'WP_Http' ) ) {
 
@@ -60,18 +60,6 @@ function get_broadly($atts) {
         $content = $resp['body'];
 
       }
-
-      else {
-
-        return $js;
-
-      }
-
-    }
-    
-    else { // if no WP_Http class, fall back to js embed
-
-      $content = $js;
 
     }
 
