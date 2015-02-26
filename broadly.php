@@ -17,19 +17,29 @@ function get_broadly($atts) {
 
   $account_id = esc_attr(get_option('broadly_account_id'));
 
-  extract(shortcode_atts(array(
+  $args = shortcode_atts( 
+    array(
+        'embed'   => 'reviews',
+        'options'   => null
+    ), 
+    $atts
+  );
 
-      'embed' => 'reviews',
+  $embed = $args['embed'];
 
-      'options' => null
-
-   ), $atts));
+  $options = $args['options'];
 
   if ( !empty($account_id) && !is_admin() ) {
 
     $url_prefix = 'https://embed.broadly.com/';
 
-    $url_options = $account_id . '/' . $embed . '?' . $options;
+    $url_options = $account_id . '/' . $embed . '?';
+
+    if (isset($options)) {
+
+      $url_options = $account_id . '/' . $embed . '?' . $options;
+      
+    }
 
     $url = $url_prefix.$url_options;
 
