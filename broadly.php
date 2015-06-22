@@ -43,7 +43,7 @@ function get_broadly($atts) {
 
     $content = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
 
-    if ( class_exists( 'WP_Http' ) ) {
+    if ( class_exists('WP_Http') ) {
 
       $args = array(
 
@@ -71,20 +71,20 @@ function get_broadly($atts) {
 add_shortcode('broadly', 'get_broadly');
 
 
-add_action( 'admin_menu', 'broadly_add_admin_menu' );
-add_action( 'admin_init', 'broadly_settings_init' );
+add_action('admin_menu', 'broadly_add_admin_menu');
+add_action('admin_init', 'broadly_settings_init');
 
 
 function broadly_add_admin_menu(  ) { 
 
-  add_menu_page( 'Broadly', 'Broadly', 'manage_options', 'broadly', 'broadly_options_page' );
+  add_menu_page('Broadly', 'Broadly', 'manage_options', 'broadly', 'broadly_options_page');
 
 }
 
 
 function broadly_settings_init(  ) { 
 
-  register_setting( 'broadly_plugin_page', 'broadly_settings' );
+  register_setting('broadly_plugin_page', 'broadly_settings');
 
   add_settings_section(
     'broadly_broadly_plugin_page_section',
@@ -95,7 +95,7 @@ function broadly_settings_init(  ) {
 
   add_settings_field( 
     'broadly_account_id', 
-    __( 'Broadly Account ID', 'broadly' ), 
+    __('Broadly Account ID', 'broadly'), 
     'broadly_account_id_render', 
     'broadly_plugin_page', 
     'broadly_broadly_plugin_page_section' 
@@ -107,7 +107,7 @@ function broadly_settings_init(  ) {
 
 function broadly_account_id_render(  ) { 
 
-  $options = get_option( 'broadly_settings' );
+  $options = get_option('broadly_settings');
   ?>
   <input type='text' name='broadly_settings[broadly_account_id]' value='<?php echo $options['broadly_account_id']; ?>'>
   <?php
@@ -117,7 +117,7 @@ function broadly_account_id_render(  ) {
 
 function broadly_settings_section_callback(  ) { 
 
-  echo __( 'Enter your Broadly account ID below.', 'broadly' );
+  echo __('Enter your Broadly account ID below.', 'broadly');
 
 }
 
@@ -130,12 +130,18 @@ function broadly_options_page(  ) {
     <h2>Broadly</h2>
     
     <?php
-    settings_fields( 'broadly_plugin_page' );
-    do_settings_sections( 'broadly_plugin_page' );
+    settings_fields('broadly_plugin_page');
+    do_settings_sections('broadly_plugin_page');
     submit_button();
     ?>
     
   </form>
+  <h2>How to Use The Plugin</h2>
+
+  <p>Simply add the <code>[broadly]</code> shortcode to the post or page that you want the reviews to be displayed on. Save the post or page and go visit the page. Your reviews should show similar to the image below.</p>
+  <p>
+    <?php echo '<img src="' . plugins_url('img/reviews-example-screenshot.png', __FILE__ ) . '" > '; ?>
+  </p>
   <?php
 
 }
