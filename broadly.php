@@ -18,7 +18,7 @@ add_action('admin_init', 'broadly_settings_init');
 
 function broadly_add_admin_menu(  ) { 
 
-  add_menu_page('Broadly', 'Broadly', 'manage_options', 'broadly', 'broadly_options_page');
+  add_menu_page('Broadly', 'Broadly', 'manage_options', 'broadly', 'broadly_options_page', plugins_url('img/logo.png', __FILE__ ));
 
 }
 
