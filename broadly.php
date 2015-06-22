@@ -2,16 +2,14 @@
 /*
   Plugin Name: Broadly WordPress Plugin
   Plugin URI: http://broadly.com
-  Version: 1.0.4
+  Version: 1.1.0
   Description: Easily integrate Broadly.com reviews into your WordPress site!
   Author: Tyler Longren
-  Author URI: https://impavidmedia.com/contact/
+  Author URI: https://longrendev.io/
   Text Domain: broadly
   Domain Path: /languages
-  License: Commercial
+  License: GPL2
  */
-
-require_once 'assets/sunrise.php';
 
 function get_broadly($atts) {
 
@@ -73,6 +71,7 @@ function get_broadly($atts) {
 add_shortcode('broadly', 'get_broadly');
 
 
+
 /**
  * Initialize plugin
  */
@@ -81,66 +80,43 @@ function broadly_init() {
 	// Make plugin available for translation, change /languages/ to your .mo-files folder name
 	load_plugin_textdomain( 'broadly', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
-	// Initialize Sunrise
-	$admin = new Sunrise6( array(
-			'file'       => __FILE__,
-			'slug'       => 'broadly',
-			'prefix'     => 'broadly_',
-			'textdomain' => 'broadly',
-			'css'        => '',
-			'js'         => ''
-		) );
+  // create custom plugin settings menu
+add_action('admin_menu', 'broadly_plugin_create_menu');
 
-  $plugin_dir = plugin_dir_url( __FILE__ );
+function my_cool_plugin_create_menu() {
 
-	// Prepare array with options
-	$options = array(
+  //create new top-level menu
+  add_menu_page('Broadly Settings', 'Broadly Settings', 'administrator', __FILE__, 'broadly_plugin_settings_page' , plugins_url('/img/logo.png', __FILE__) );
 
-		// Open tab: Regular fields
-		array(
-			'type' => 'opentab',
-			'name' => __( 'Settings', 'broadly' )
-		),
-
-		array(
-			'id'      => 'account_id',
-			'type'    => 'text',
-			'default' => '',
-			'name'    => __( 'Broadly Account ID', 'broadly' ),
-			'desc'    => __( 'The ID provided by your account manager', 'broadly' )
-		),
-
-		// Close tab: Regular fields
-		array(
-			'type' => 'closetab'
-		),
-    // Open tab: Regular fields
-    array(
-      'type' => 'opentab',
-      'name' => __( 'Usage', 'broadly' )
-    ),
-    array(
-      'id'      => 'usage',
-      'type'    => 'html',
-      'content' => '<h2>How to Use The Plugin</h2><p>Simply add the <code>[broadly]</code> shortcode to the post or page that you want the reviews to be displayed on. Save the post or page and go visit the page. Your reviews should show similar to the image below.</p>
-      <p><img src="' . $plugin_dir . 'reviews-example-screenshot.png" border="0" /></p>'
-    ),
-    // Close tab: Regular fields
-    array(
-      'type' => 'closetab'
-    )
-	);
-
-	// Add top-level menu (like Dashboard -> Comments)
-	$admin->add_menu( array(
-			'page_title'  => __( 'Broadly Settings', 'broadly' ), // Settings page <title>
-			'menu_title'  => __( 'Broadly Settings', 'broadly' ), // Menu title, will be shown in left dashboard menu
-			'capability'  => 'manage_options', // Minimal user capability to access this page
-			'slug'        => 'broadly-settings', // Unique page slug
-			'position'    => '91.1', // Menu position from 80 to <infinity>, you can use decimals
-			'options'     => $options // Array with options available on this page
-		) );
+  //call register settings function
+  add_action( 'admin_init', 'register_broadly_plugin_settings' );
 }
 
+
+function register_broadly_plugin_settings() {
+  //register our settings
+  register_setting( 'broadly-plugin-settings-group', 'broadly_account_id' );
+}
+
+function my_cool_plugin_settings_page() {
+?>
+<div class="wrap">
+<h2>Broadly Settings</h2>
+
+<form method="post" action="options.php">
+    <?php settings_fields( 'broadly-plugin-settings-group' ); ?>
+    <?php do_settings_sections( 'broadly-plugin-settings-group' ); ?>
+    <table class="form-table">
+        <tr valign="top">
+        <th scope="row">Account ID</th>
+        <td><input type="text" name="broadly_account_id" value="<?php echo esc_attr( get_option('broadly_account_id') ); ?>" /></td>
+        </tr>
+    </table>
+    <?php submit_button(); ?>
+</form>
+<h2>How to Use The Plugin</h2><p>Simply add the <code>[broadly]</code> shortcode to the post or page that you want the reviews to be displayed on. Save the post or page and go visit the page. Your reviews should show similar to the image below.</p>
+      <p><img src="<?php plugins_url('/img/logo.png', __FILE__); ?>" border="0" /></p>
+</div>
+<?php
 // Hook to plugins_loaded
 add_action( 'plugins_loaded', 'broadly_init' );
