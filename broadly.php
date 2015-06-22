@@ -8,7 +8,7 @@
   Author URI: https://longrendev.io/
   Text Domain: broadly
   Domain Path: /languages
-  License: GPL2
+  License: MIT
  */
 
 function get_broadly($atts) {
