@@ -11,65 +11,6 @@
   License: MIT
  */
 
-function get_broadly($atts) {
-
-  $account_id = esc_attr(get_option('broadly_account_id'));
-
-  $args = shortcode_atts( 
-    array(
-        'embed'   => 'reviews',
-        'options'   => null
-    ), 
-    $atts
-  );
-
-  $embed = $args['embed'];
-
-  $options = $args['options'];
-
-  if ( !empty($account_id) && !is_admin() ) {
-
-    $url_prefix = 'https://embed.broadly.com/';
-
-    $url_options = $account_id . '/' . $embed . '?';
-
-    if (isset($options)) {
-
-      $url_options = $account_id . '/' . $embed . '?' . $options;
-
-    }
-
-    $url = $url_prefix.$url_options;
-
-    $content = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
-
-    if ( class_exists('WP_Http') ) {
-
-      $args = array(
-
-        'sslverify' => true
-
-      );
-
-      $resp = wp_remote_request( $url, $args );
-
-      if ( 200 == $resp['response']['code'] ) {
-
-        $content = $resp['body'];
-
-      }
-
-    }
-
-    return $content;
-
-  }
-
-  return false;
-
-}
-add_shortcode('broadly', 'get_broadly');
-
 
 add_action('admin_menu', 'broadly_add_admin_menu');
 add_action('admin_init', 'broadly_settings_init');
@@ -145,5 +86,65 @@ function broadly_options_page(  ) {
   <?php
 
 }
+
+function get_broadly($atts) {
+
+  $broadly_options = get_option('broadly_settings');
+  $account_id = $broadly_options['broadly_account_id'];
+
+  $args = shortcode_atts( 
+    array(
+        'embed'   => 'reviews',
+        'options'   => null
+    ), 
+    $atts
+  );
+
+  $embed = $args['embed'];
+
+  $options = $args['options'];
+
+  if ( !empty($account_id) && !is_admin() ) {
+
+    $url_prefix = 'https://embed.broadly.com/';
+
+    $url_options = $account_id . '/' . $embed . '?';
+
+    if (isset($options)) {
+
+      $url_options = $account_id . '/' . $embed . '?' . $options;
+
+    }
+
+    $url = $url_prefix.$url_options;
+
+    $content = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
+
+    if ( class_exists('WP_Http') ) {
+
+      $args = array(
+
+        'sslverify' => true
+
+      );
+
+      $resp = wp_remote_request( $url, $args );
+
+      if ( 200 == $resp['response']['code'] ) {
+
+        $content = $resp['body'];
+
+      }
+
+    }
+
+    return $content;
+
+  }
+  echo "we're fucked: " . $account_id;
+  return false;
+
+}
+add_shortcode('broadly', 'get_broadly');
 
 ?>
