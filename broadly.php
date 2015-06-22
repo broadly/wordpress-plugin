@@ -11,6 +11,11 @@
   License: MIT
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+  die;
+}
+
 function get_broadly($atts) {
 
   $account_id = esc_attr(get_option('broadly_account_id'));
@@ -118,5 +123,7 @@ function my_cool_plugin_settings_page() {
       <p><img src="<?php plugins_url('/img/logo.png', __FILE__); ?>" border="0" /></p>
 </div>
 <?php
+}
 // Hook to plugins_loaded
 add_action( 'plugins_loaded', 'broadly_init' );
+?>
