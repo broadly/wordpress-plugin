@@ -11,11 +11,6 @@
   License: MIT
  */
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-  die;
-}
-
 function get_broadly($atts) {
 
   $account_id = esc_attr(get_option('broadly_account_id'));
@@ -76,54 +71,73 @@ function get_broadly($atts) {
 add_shortcode('broadly', 'get_broadly');
 
 
+add_action( 'admin_menu', 'broadly_add_admin_menu' );
+add_action( 'admin_init', 'broadly_settings_init' );
 
-/**
- * Initialize plugin
- */
-function broadly_init() {
 
-	// Make plugin available for translation, change /languages/ to your .mo-files folder name
-	load_plugin_textdomain( 'broadly', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+function broadly_add_admin_menu(  ) { 
 
-  // create custom plugin settings menu
-add_action('admin_menu', 'broadly_plugin_create_menu');
+  add_menu_page( 'Broadly', 'Broadly', 'manage_options', 'broadly', 'broadly_options_page' );
 
-function my_cool_plugin_create_menu() {
-
-  //create new top-level menu
-  add_menu_page('Broadly Settings', 'Broadly Settings', 'administrator', __FILE__, 'broadly_plugin_settings_page' , plugins_url('/img/logo.png', __FILE__) );
-
-  //call register settings function
-  add_action( 'admin_init', 'register_broadly_plugin_settings' );
 }
 
 
-function register_broadly_plugin_settings() {
-  //register our settings
-  register_setting( 'broadly-plugin-settings-group', 'broadly_account_id' );
+function broadly_settings_init(  ) { 
+
+  register_setting( 'broadly_plugin_page', 'broadly_settings' );
+
+  add_settings_section(
+    'broadly_broadly_plugin_page_section',
+    null,
+    'broadly_settings_section_callback', 
+    'broadly_plugin_page'
+  );
+
+  add_settings_field( 
+    'broadly_account_id', 
+    __( 'Broadly Account ID', 'broadly' ), 
+    'broadly_account_id_render', 
+    'broadly_plugin_page', 
+    'broadly_broadly_plugin_page_section' 
+  );
+
+
 }
 
-function my_cool_plugin_settings_page() {
-?>
-<div class="wrap">
-<h2>Broadly Settings</h2>
 
-<form method="post" action="options.php">
-    <?php settings_fields( 'broadly-plugin-settings-group' ); ?>
-    <?php do_settings_sections( 'broadly-plugin-settings-group' ); ?>
-    <table class="form-table">
-        <tr valign="top">
-        <th scope="row">Account ID</th>
-        <td><input type="text" name="broadly_account_id" value="<?php echo esc_attr( get_option('broadly_account_id') ); ?>" /></td>
-        </tr>
-    </table>
-    <?php submit_button(); ?>
-</form>
-<h2>How to Use The Plugin</h2><p>Simply add the <code>[broadly]</code> shortcode to the post or page that you want the reviews to be displayed on. Save the post or page and go visit the page. Your reviews should show similar to the image below.</p>
-      <p><img src="<?php plugins_url('/img/logo.png', __FILE__); ?>" border="0" /></p>
-</div>
-<?php
+function broadly_account_id_render(  ) { 
+
+  $options = get_option( 'broadly_settings' );
+  ?>
+  <input type='text' name='broadly_settings[broadly_account_id]' value='<?php echo $options['broadly_account_id']; ?>'>
+  <?php
+
 }
-// Hook to plugins_loaded
-add_action( 'plugins_loaded', 'broadly_init' );
+
+
+function broadly_settings_section_callback(  ) { 
+
+  echo __( 'Enter your Broadly account ID below.', 'broadly' );
+
+}
+
+
+function broadly_options_page(  ) { 
+
+  ?>
+  <form action='options.php' method='post'>
+    
+    <h2>Broadly</h2>
+    
+    <?php
+    settings_fields( 'broadly_plugin_page' );
+    do_settings_sections( 'broadly_plugin_page' );
+    submit_button();
+    ?>
+    
+  </form>
+  <?php
+
+}
+
 ?>
