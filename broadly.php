@@ -83,6 +83,7 @@ function broadly_options_page(  ) {
   <p>
     <?php echo '<img src="' . plugins_url('img/reviews-example-screenshot.png', __FILE__ ) . '" > '; ?>
   </p>
+  <p><code>[broadly]</code> can be customized as well. If you want to display the three most recent reviews, do this: <code>[broadly embed="reviews" options="recent=3"]</code></p>
   <?php
 
 }
