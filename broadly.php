@@ -2,7 +2,7 @@
 /*
   Plugin Name: Broadly WordPress Plugin
   Plugin URI: http://broadly.com
-  Version: 1.1.0
+  Version: 2.0.1
   Description: Easily integrate Broadly.com reviews into your WordPress site!
   Author: Tyler Longren
   Author URI: https://longrendev.io/
@@ -16,37 +16,37 @@ add_action('admin_menu', 'broadly_add_admin_menu');
 add_action('admin_init', 'broadly_settings_init');
 
 
-function broadly_add_admin_menu(  ) { 
+function broadly_add_admin_menu(  ) {
 
   add_menu_page('Broadly', 'Broadly', 'manage_options', 'broadly', 'broadly_options_page', plugins_url('img/logo.png', __FILE__ ));
 
 }
 
 
-function broadly_settings_init(  ) { 
+function broadly_settings_init(  ) {
 
   register_setting('broadly_plugin_page', 'broadly_settings');
 
   add_settings_section(
     'broadly_broadly_plugin_page_section',
     null,
-    'broadly_settings_section_callback', 
+    'broadly_settings_section_callback',
     'broadly_plugin_page'
   );
 
-  add_settings_field( 
-    'broadly_account_id', 
-    __('Broadly Account ID', 'broadly'), 
-    'broadly_account_id_render', 
-    'broadly_plugin_page', 
-    'broadly_broadly_plugin_page_section' 
+  add_settings_field(
+    'broadly_account_id',
+    __('Broadly Account ID', 'broadly'),
+    'broadly_account_id_render',
+    'broadly_plugin_page',
+    'broadly_broadly_plugin_page_section'
   );
 
 
 }
 
 
-function broadly_account_id_render(  ) { 
+function broadly_account_id_render(  ) {
 
   $options = get_option('broadly_settings');
   ?>
@@ -56,26 +56,26 @@ function broadly_account_id_render(  ) {
 }
 
 
-function broadly_settings_section_callback(  ) { 
+function broadly_settings_section_callback(  ) {
 
   echo __('Enter your Broadly account ID below.', 'broadly');
 
 }
 
 
-function broadly_options_page(  ) { 
+function broadly_options_page(  ) {
 
   ?>
   <form action='options.php' method='post'>
-    
+
     <h2>Broadly</h2>
-    
+
     <?php
     settings_fields('broadly_plugin_page');
     do_settings_sections('broadly_plugin_page');
     submit_button();
     ?>
-    
+
   </form>
   <h2>How to Use The Plugin</h2>
 
@@ -92,11 +92,11 @@ function get_broadly($atts) {
   $broadly_options = get_option('broadly_settings');
   $account_id = $broadly_options['broadly_account_id'];
 
-  $args = shortcode_atts( 
+  $args = shortcode_atts(
     array(
         'embed'   => 'reviews',
         'options'   => null
-    ), 
+    ),
     $atts
   );
 
