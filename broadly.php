@@ -141,7 +141,7 @@ function get_broadly($atts) {
     return $content;
 
   }
-  echo "we're fucked: " . $account_id;
+  echo "Incorrect Broadly account ID or missing account ID. Were you sure to entere it?";
   return false;
 
 }
