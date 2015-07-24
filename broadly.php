@@ -1,151 +1,122 @@
 <?php
 /*
-  Plugin Name: Broadly WordPress Plugin
-  Plugin URI: http://broadly.com
-  Version: 2.0.1
-  Description: Easily integrate Broadly.com reviews into your WordPress site!
-  Author: Tyler Longren
-  Author URI: https://longrendev.io/
-  Text Domain: broadly
-  Domain Path: /languages
-  License: MIT
- */
+Plugin Name: Broadly for WordPress
+Description: Dynamic integration of your Broadly reviews within your existing WordPress website. 
+Plugin URL: http://broadly.com
+Author: DevriX
+Author URL: http://devrix.com
+Version: 3.0
+License: GPLv2 or later
+*/
 
+if ( ! class_exists( 'Broadly_Plugin' ) ) {
+	
+	/**
+	 * Main Broadly Plugin class
+	 * 
+	 * Responsible for the frontend review management and backend  
+	 * settings for the plugin.
+	 * 
+	 * @author nofearinc
+	 *
+	 */
+	class Broadly_Plugin {
+	
+		function __construct() {
+			// Creating the admin menu
+			add_action( 'admin_menu', array( $this, 'broadly_menu' ) );
+			
+			// Register the Settings fields
+			add_action( 'admin_init', array( $this, 'broadly_settings_init' ) );
+			
+			// Replace the Broadly scripts with the prefetched HTML
+			add_filter( 'the_content', array( $this, 'replace_js' ) );
+		}
 
-add_action('admin_menu', 'broadly_add_admin_menu');
-add_action('admin_init', 'broadly_settings_init');
+		/**
+		 * Register a menu page for Broadly under Settings
+		 */
+		public function broadly_menu() {
+			add_options_page( __('Broadly', 'broadly' ), 
+					__( 'Broadly Setup', 'broadly' ),
+					'manage_options', 'broadly', array( $this, 'broadly_menu_cb' ) );
+		}
+		
+		/**
+		 * Settings class initialization
+		 */
+		public function broadly_settings_init() {
+			include_once 'settings.class.php';
+		}
+		
+		/**
+		 * Menu page callback - render the UI form for the admin
+		 */
+		public function broadly_menu_cb() {
+			$broadly_options = get_option( 'broadly_options', array() );
+			
+			include_once 'settings-page.php';
+		}
 
+		/**
+		 * Replace the JS snippet with the prefetched reviews
+		 * 
+		 * @param string $content the existing page content
+		 * @return string $content the updated page content if a script is found
+		 */
+		public function replace_js( $content ) {
+			// Look for embedly scripts
+			$matches_count = preg_match_all( '/<script.*embed\.broadly\.com\/include.js.*data-url="\/([^"]*)[^>]*>(.*?)<\/script>/', $content, $matches );
 
-function broadly_add_admin_menu(  ) {
+			// Proceed further only if a match is found - false will handle both 0 and false
+			if ( false != $matches_count ) {
+				
+				// Iterate through all of the matches if more scripts are injected
+				for ( $current_match = 0; $current_match < $matches_count; $current_match++ ) {
+					
+					// Fetch the entire script and the data-url match
+					$script_match = $matches[0][$current_match];
+					$dataurl_match = $matches[1][$current_match];
+					
+					// Append the data-url and build the reviews URL
+					$broadly_reviews_url = 'http://embed.broadly.com/' . $dataurl_match;
+		
+					$args = array();
+					/**
+					 * Hook the arguments for the remote call.
+					 * 
+					 * If needed, we can disable SSL or update the other HTTP arguments.
+					 */
+					$args = apply_filters( 'broadly_ssl_args', $args );
+		
+					$response = wp_remote_get( $broadly_reviews_url, $args );
+					
+					// Verify for errors - not being sent for reporting yet
+					$error = null;
+					if ( is_wp_error( $response ) ) {
+						$error = __('Error Found ( ' . $response->get_error_message() . ' )', 'broadly' );
+					} else {
+						if ( ! empty( $response["body"] ) ) {
+							$review = $response["body"];
+						} else {
+							$error = __( 'No body tag in the response', 'broadly' );
+						}
+					}
+					
+					// If errors occured, don't replace the script tags
+					if ( ! is_null( $error ) ) {
+						continue;
+					}
 
-  add_menu_page('Broadly', 'Broadly', 'manage_options', 'broadly', 'broadly_options_page', plugins_url('img/logo.png', __FILE__ ));
-
+					// Replace the script tag with the HTML reviews
+					$content = str_replace( $script_match, $review, $content );
+				}
+			}
+			
+			return $content;
+		}
+	}
+	
+	// Initialize the plugin body
+	$broadly = new Broadly_Plugin();
 }
-
-
-function broadly_settings_init(  ) {
-
-  register_setting('broadly_plugin_page', 'broadly_settings');
-
-  add_settings_section(
-    'broadly_broadly_plugin_page_section',
-    null,
-    'broadly_settings_section_callback',
-    'broadly_plugin_page'
-  );
-
-  add_settings_field(
-    'broadly_account_id',
-    __('Broadly Account ID', 'broadly'),
-    'broadly_account_id_render',
-    'broadly_plugin_page',
-    'broadly_broadly_plugin_page_section'
-  );
-
-
-}
-
-
-function broadly_account_id_render(  ) {
-
-  $options = get_option('broadly_settings');
-  ?>
-  <input type='text' name='broadly_settings[broadly_account_id]' value='<?php echo $options['broadly_account_id']; ?>'>
-  <?php
-
-}
-
-
-function broadly_settings_section_callback(  ) {
-
-  echo __('Enter your Broadly account ID below.', 'broadly');
-
-}
-
-
-function broadly_options_page(  ) {
-
-  ?>
-  <form action='options.php' method='post'>
-
-    <h2>Broadly</h2>
-
-    <?php
-    settings_fields('broadly_plugin_page');
-    do_settings_sections('broadly_plugin_page');
-    submit_button();
-    ?>
-
-  </form>
-  <h2>How to Use The Plugin</h2>
-
-  <p>Simply add the <code>[broadly]</code> shortcode to the post or page that you want the reviews to be displayed on. Save the post or page and go visit the page. Your reviews should show similar to the image below.</p>
-  <p>
-    <?php echo '<img src="' . plugins_url('img/reviews-example-screenshot.png', __FILE__ ) . '" > '; ?>
-  </p>
-  <p><code>[broadly]</code> can be customized as well. If you want to display the three most recent reviews, do this: <code>[broadly embed="reviews" options="recent=3"]</code></p>
-  <?php
-
-}
-
-function get_broadly($atts) {
-
-  $broadly_options = get_option('broadly_settings');
-  $account_id = $broadly_options['broadly_account_id'];
-
-  $args = shortcode_atts(
-    array(
-        'embed'   => 'reviews',
-        'options'   => null
-    ),
-    $atts
-  );
-
-  $embed = $args['embed'];
-
-  $options = $args['options'];
-
-  if ( !empty($account_id) && !is_admin() ) {
-
-    $url_prefix = 'https://embed.broadly.com/';
-
-    $url_options = $account_id . '/' . $embed . '?';
-
-    if (isset($options)) {
-
-      $url_options = $account_id . '/' . $embed . '?' . $options;
-
-    }
-
-    $url = $url_prefix.$url_options;
-
-    $content = '<script type="text/javascript" src="//embed.broadly.com/include.js" defer data-url="/' . $url_options . '"></script>';
-
-    if ( class_exists('WP_Http') ) {
-
-      $args = array(
-
-        'sslverify' => true
-
-      );
-
-      $resp = wp_remote_request( $url, $args );
-
-      if ( 200 == $resp['response']['code'] ) {
-
-        $content = $resp['body'];
-
-      }
-
-    }
-
-    return $content;
-
-  }
-  echo "Incorrect Broadly account ID or missing account ID. Were you sure to entere it?";
-  return false;
-
-}
-add_shortcode('broadly', 'get_broadly');
-
-?>
