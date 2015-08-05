@@ -4,7 +4,7 @@ Plugin Name: Broadly for WordPress
 Description: Dynamic integration of your Broadly reviews within your existing WordPress website. 
 Plugin URL: http://broadly.com
 Author: Broadly
-Author URL: http://broadly.com/
+Author URI: http://broadly.com/
 Version: 2.0
 License: GPLv2 or later
 */
