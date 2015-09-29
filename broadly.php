@@ -5,7 +5,7 @@ Description: Dynamic integration of your Broadly reviews within your existing Wo
 Plugin URL: http://broadly.com
 Author: Broadly
 Author URI: http://broadly.com/
-Version: 2.0
+Version: 2.1
 License: GPLv2 or later
 */
 
@@ -21,6 +21,8 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 	 *
 	 */
 	class Broadly_Plugin {
+
+		public static $version = '2.1';
 	
 		function __construct() {
 			// Creating the admin menu
@@ -108,8 +110,12 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 						continue;
 					}
 
+					// Wrapper tabs
+					$opening_comment = sprintf( '<!-- Start of Broadly "reviews" content - Broadly for WordPress %s -->', self::$version );
+					$closing_comment = '<!-- End of Broadly "reviews" content -->';
+
 					// Replace the script tag with the HTML reviews
-					$content = str_replace( $script_match, $review, $content );
+					$content = str_replace( $script_match, $opening_comment . $review . $closing_comment, $content );
 				}
 			}
 			
