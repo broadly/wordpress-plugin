@@ -91,7 +91,9 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 					 */
 					$args = apply_filters( 'broadly_ssl_args', $args );
 		
+					add_filter( 'http_request_args', array( $this, 'filter_broadly_headers' ), 10, 2 );
 					$response = wp_remote_get( $broadly_reviews_url, $args );
+					remove_filter( 'http_request_args', array( $this, 'filter_broadly_headers' ), 10 );
 					
 					// Verify for errors - not being sent for reporting yet
 					$error = null;
@@ -120,6 +122,31 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 			}
 			
 			return $content;
+		}
+
+		/**
+		 * Filter Broadly Headers
+		 * 
+		 * @param $request_args original request arguments
+		 * @param $url request URL
+		 */
+		public function filter_broadly_headers( $request_args, $url ) {
+			$user_agent = sprintf( '%s; Broadly/%s', $request_args['user-agent'], self::$version );
+
+			// Update the User-Agent header
+			$headers = $request_args['headers'];
+			$headers['User-Agent'] = $user_agent;
+
+			// Set the Referer header if possible
+			$current_page = get_the_permalink();
+			if ( false !== $current_page ) {
+				$headers['Referer'] = $current_page;
+			}
+
+			// Update the original headers
+			$request_args['headers'] = $headers;
+
+			return $request_args;
 		}
 	}
 	
