@@ -113,8 +113,9 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 					}
 
 					// Wrapper tabs
-					$opening_comment = sprintf( '<!-- Start of Broadly "reviews" content - Broadly for WordPress %s -->', self::$version );
-					$closing_comment = '<!-- End of Broadly "reviews" content -->';
+					$review_type = $this->parse_review_from_datauri( $dataurl_match );
+					$opening_comment = sprintf( '<!-- Start of Broadly "%s" content - Broadly for WordPress %s -->', $review_type, self::$version );
+					$closing_comment = sprintf( '<!-- End of Broadly "%s" content -->', $review_type );
 
 					// Replace the script tag with the HTML reviews
 					$content = str_replace( $script_match, $opening_comment . $review . $closing_comment, $content );
@@ -147,6 +148,24 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 			$request_args['headers'] = $headers;
 
 			return $request_args;
+		}
+
+		/**
+		 * Parse the type of review from the data_uri
+		 * 
+		 * @param $data_uri argument passed to Broadly including the review type
+		 */
+		private function parse_review_from_datauri( $data_uri ) {
+			// Split the data uri in attempt to read the type
+			$components = explode( '/', $data_uri );
+
+			$review_type = 'reviews';
+
+			if ( isset( $components[1] ) ) {
+				$review_type = $components[1];
+			}
+
+			return $review_type;
 		}
 	}
 	
