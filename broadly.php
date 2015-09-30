@@ -101,7 +101,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 						$error = __('Error Found ( ' . $response->get_error_message() . ' )', 'broadly' );
 					} else {
 						if ( ! empty( $response["body"] ) ) {
-							$review = $response["body"];
+							$embed_content = $response["body"];
 						} else {
 							$error = __( 'No body tag in the response', 'broadly' );
 						}
@@ -113,12 +113,12 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 					}
 
 					// Wrapper tabs
-					$review_type = $this->parse_review_from_datauri( $dataurl_match );
-					$opening_comment = sprintf( '<!-- Start of Broadly "%s" content - Broadly for WordPress %s -->', $review_type, self::$version );
-					$closing_comment = sprintf( '<!-- End of Broadly "%s" content -->', $review_type );
+					$embed_name = $this->parse_embed_from_datauri( $dataurl_match );
+					$opening_comment = sprintf( '<!-- Start of Broadly "%s" content - Broadly for WordPress %s -->', $embed_name, self::$version );
+					$closing_comment = sprintf( '<!-- End of Broadly "%s" content -->', $embed_name );
 
 					// Replace the script tag with the HTML reviews
-					$content = str_replace( $script_match, $opening_comment . $review . $closing_comment, $content );
+					$content = str_replace( $script_match, $opening_comment . $embed_content . $closing_comment, $content );
 				}
 			}
 			
@@ -151,21 +151,21 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 		}
 
 		/**
-		 * Parse the type of review from the data_uri
+		 * Parse the type of embed from the data_uri
 		 * 
-		 * @param $data_uri argument passed to Broadly including the review type
+		 * @param $data_uri argument passed to Broadly including the embed name
 		 */
-		private function parse_review_from_datauri( $data_uri ) {
+		private function parse_embed_from_datauri( $data_uri ) {
 			// Split the data uri in attempt to read the type
 			$components = explode( '/', $data_uri );
 
-			$review_type = 'reviews';
+			$embed_name = 'reviews';
 
 			if ( isset( $components[1] ) ) {
-				$review_type = $components[1];
+				$embed_name = $components[1];
 			}
 
-			return $review_type;
+			return $embed_name;
 		}
 	}
 	
