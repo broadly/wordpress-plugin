@@ -2,7 +2,7 @@
 Contributors: broadly
 Tested up to: 4.3.1
 Requires at least: 3.0.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Tags: broadly, marketing, smb, reviews
 
 == Description ==
@@ -46,6 +46,11 @@ Contact your Account Manager directly or contact Broadly support at either 1-800
 Learn more about Broadly at http://broadly.com.
 
 == Changelog ==
+
+= 2.0.2 =
+Release Date: October 7, 2015
+
+* Fix deployment issue
 
 = 2.0.1 =
 Release Date: September 30, 2015
