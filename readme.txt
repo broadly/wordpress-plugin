@@ -2,7 +2,7 @@
 Contributors: broadly
 Tested up to: 4.2.3
 Requires at least: 3.0.1
-Stable tag: 2.0
+Stable tag: 2.0.1
 Tags: broadly, marketing, smb, reviews
 
 == Description ==
@@ -46,6 +46,13 @@ Contact your Account Manager directly or contact Broadly support at either 1-800
 Learn more about Broadly at http://broadly.com.
 
 == Changelog ==
+
+= 2.0.1 =
+Release Date: September 30, 2015
+
+* Plugin adds beginning and ending comments to embed insertion code
+* Additional headers sent to Broadly for improved performance monitoring
+
 = 2.0 =
 Release Date: August 1, 2015
 
