@@ -59,7 +59,7 @@ if git show-ref --tags --quiet --verify -- "refs/tags/$NEWVERSION1"
 		echo "Version $NEWVERSION1 already exists as git tag. Exiting...";
 		exit 1;
 	else
-		echo "Git version does not exist. Let's proceed..."
+		echo "Git tag does not yet exist. Let's proceed..."
 fi
 
 # Do SVN checkout and clear to make room for new files
@@ -71,7 +71,7 @@ if [ -d "$SVNPATH/tags/$NEWVERSION1" ]
 	  echo "Version $NEWVERSION1 already exists as SVN tag. Exiting...";
 	  exit 1;
 	else
-		echo "SVN version does not exist. Let's proceed..."
+		echo "SVN tag does not yet exist. Let's proceed..."
 fi
 
 echo "Clearing svn trunk so we can overwrite it"
