@@ -57,7 +57,7 @@ fi
 if git show-ref --tags --quiet --verify -- "refs/tags/$NEWVERSION1"
 	then
 		echo "Version $NEWVERSION1 already exists as git tag. Exiting...";
-		exit 1;
+		#exit 1;
 	else
 		echo "Git version does not exist. Let's proceed..."
 fi
@@ -69,7 +69,7 @@ svn co $SVNURL $SVNPATH
 if [ -d "$SVNPATH/tags/$NEWVERSION1" ]
 	then
 	  echo "Version $NEWVERSION1 already exists as SVN tag. Exiting...";
-	  exit 1;
+	  #exit 1;
 	else
 		echo "SVN version does not exist. Let's proceed..."
 fi
@@ -78,15 +78,13 @@ echo "Clearing svn trunk so we can overwrite it"
 svn rm $SVNPATH/trunk/*
 
 # Check changes, git commit if needed
+echo -e "Enter a commit message for this new version: \c"
+read COMMITMSG
 if [ -n "$(git status --porcelain)" ];
 	then
-		echo -e "Changes detected, enter a commit message for this new version: \c"
-		read COMMITMSG
 		git commit -am "$COMMITMSG"
 		echo "Push new version to git"
 		git push origin master
-	else
-	  echo "Current dir is up to date";
 fi
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
@@ -111,20 +109,20 @@ echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-svn commit --username=$SVNUSER -m "$COMMITMSG"
+#svn commit --username=$SVNUSER -m "$COMMITMSG"
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
 svn copy trunk/ tags/$NEWVERSION1/
 cd $SVNPATH/tags/$NEWVERSION1
-svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION1"
+#svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION1"
 
 echo "Tagging new version in git"
 cd $GITPATH
-git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
-git push origin master --tags
+#git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
+#git push origin master --tags
 
 echo "Removing temporary directory $SVNPATH"
-rm -fr $SVNPATH/
+#rm -fr $SVNPATH/
 
 echo "*** FIN ***"
