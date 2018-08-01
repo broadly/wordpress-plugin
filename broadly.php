@@ -34,7 +34,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 			// Replace the Broadly scripts with the prefetched HTML
 			add_filter( 'the_content', array( $this, 'replace_js' ) );
 
-
+      // Inject webchat script in the header.
 			add_action('wp_head', array( $this, 'add_webchat' ) );
 		}
 
@@ -159,7 +159,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 			if ( $broadly_options['broadly_webchat_enabled'] == 'Yes') {
 				$script  = '<script>'; 
 				$script .= '  window.broadlyChat = {';
-				$script .= '    id: "jssD22VaMqSUME2oYi6K"';
+				$script .= '    id: "<<webchatid>>"';
 				$script .= '  };';
 				$script .= '</script>';
 				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async defer></script>';

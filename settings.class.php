@@ -55,9 +55,8 @@ class Broadly_Settings {
 		
 		$account_id = '';
 		
-		// Make sure it's properly escaped
-		if ( is_array( $broadly_options ) 
-				&& ! empty( $broadly_options['broadly_account_id'] ) ) {
+		if ( is_array( $broadly_options ) && ! empty( $broadly_options['broadly_account_id'] ) ) {
+		  // Make sure it's properly escaped
 			$account_id = esc_html( $broadly_options['broadly_account_id'] );
 		}
 		
@@ -65,30 +64,33 @@ class Broadly_Settings {
 	}
 
 	/**
-	 * Broadly Chat Enabled field management
+	 * Broadly Webchat Enabled field management
 	 */
 	public function broadly_webchat_enabled_cb() {
 		$broadly_options = get_option( 'broadly_options', array() );
 		
 		$webchat_enabled = 'Yes';
 		
-		if ( is_array( $broadly_options ) 
-				&& ! empty( $broadly_options['broadly_webchat_enabled'] ) ) {
+		if ( is_array( $broadly_options ) && ! empty( $broadly_options['broadly_webchat_enabled'] ) ) {
 			$webchat_enabled = $broadly_options['broadly_webchat_enabled'];
 		}
 		
 		echo "<select name='broadly_options[broadly_webchat_enabled]'>";
-		echo $this->option("Yes", $webchat_enabled);
-		echo $this->option("No", $webchat_enabled);
+		echo $this->html_form_option("Yes", $webchat_enabled);
+		echo $this->html_form_option("No", $webchat_enabled);
 		echo "</select>";
 	}
 
-	public function option($value, $selected) {
+  private function html_form_option($value, $selected) {
+    $option = '<option value="'.$value.'"'; 
+
 		if ($value == $selected) {
-			return '<option value="'.$value.'" selected>'.$value.'</option>';
-		} else {
-			return '<option value="'.$value.'">'.$value.'</option>';
+			$option .= ' selected';
 		}
+
+	  $option .= '>'.$value.'</option>';
+
+    return $option;
 	}
 
 }
