@@ -29,6 +29,14 @@ class Broadly_Settings {
 				'broadly',
 				'broadly_admin_section'
 		);
+
+		add_settings_field(
+			'broadly_webchat_enabled',
+			__( 'Webchat Enabled', 'broadly' ),
+			array( $this, 'broadly_webchat_enabled_cb' ),
+			'broadly',
+			'broadly_admin_section'
+		);
 	}
 	
 	/**
@@ -55,6 +63,34 @@ class Broadly_Settings {
 		
 		echo "<input type='text' name='broadly_options[broadly_account_id]' value='$account_id'>";
 	}
+
+	/**
+	 * Broadly Chat Enabled field management
+	 */
+	public function broadly_webchat_enabled_cb() {
+		$broadly_options = get_option( 'broadly_options', array() );
+		
+		$webchat_enabled = 'Yes';
+		
+		if ( is_array( $broadly_options ) 
+				&& ! empty( $broadly_options['broadly_webchat_enabled'] ) ) {
+			$webchat_enabled = $broadly_options['broadly_webchat_enabled'];
+		}
+		
+		echo "<select name='broadly_options[broadly_webchat_enabled]'>";
+		echo $this->option("Yes", $webchat_enabled);
+		echo $this->option("No", $webchat_enabled);
+		echo "</select>";
+	}
+
+	public function option($value, $selected) {
+		if ($value == $selected) {
+			return '<option value="'.$value.'" selected>'.$value.'</option>';
+		} else {
+			return '<option value="'.$value.'">'.$value.'</option>';
+		}
+	}
+
 }
 
 /**
