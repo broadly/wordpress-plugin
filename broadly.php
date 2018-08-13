@@ -153,13 +153,25 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 			return $request_args;
 		}
 
+    private function get_account_id() {
+      $broadly_account_id = null;
+      $broadly_options    = get_option( 'broadly_options', array() );
+      if ( is_array( $broadly_options ) 
+        && ! empty( $broadly_options['broadly_account_id'] ) ) {
+        
+        $broadly_account_id = $broadly_options['broadly_account_id']; 
+      }
+
+      return $broadly_account_id;
+    }
+    
 		public function add_webchat() {
-			$broadly_options = get_option( 'broadly_options', array() );
-						
-			if ( $broadly_options['broadly_webchat_enabled'] == 'Yes') {
+      $broadly_account_id = $this->get_account_id();
+
+			if ( $broadly_account_id != null) {
 				$script  = '<script>'; 
 				$script .= '  window.broadlyChat = {';
-				$script .= '    id: "<<webchatid>>"';
+				$script .= '    id: "'.$broadly_account_id.'"';
 				$script .= '  };';
 				$script .= '</script>';
 				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async defer></script>';
