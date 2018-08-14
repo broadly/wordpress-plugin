@@ -8,11 +8,12 @@ Tags: broadly, marketing, smb, CRM, reviews, webchat, chat, leads, messaging, cu
 
 == Description ==
 
-[Broadly](http://broadly.com) is a marketing tool for small businesses.
+Broadly allows your business to easily communicate with your customers. Manage your online reputation and customer communications across SMS and email from any device, in real-time.
 
 **Features include:**
 
-* **All Your Reviews.** Show off your business's great reviews with the Broadly for WordPress plugin. We aggregate reviews from Google, Yelp, and Broadly to display on your website.
+* **Web Chat.** Broadly’s Web Chat encourages prospective customers to get in touch with you immediately. Engage with them in real time, and convert more visitors into qualified leads and customers.
+* **All Your Reviews.** Show off your business's great reviews with the Broadly for WordPress plugin. We aggregate reviews from Google, Facebook, TripAdvisor, NextDoor and more, and display them on your website.
 * **Native Embeds.** The Broadly for WordPress plugin allows Broadly embeds to become native on your website - operating without JavaScript - and helping with SEO and new, fresh content.
 * **WordPress Support.** WordPress is a powerful and flexible platform for managing websites, and the Broadly for WordPress plugin provides simple and easy native support.
 
@@ -25,6 +26,7 @@ Tags: broadly, marketing, smb, CRM, reviews, webchat, chat, leads, messaging, cu
 4. The settings page will display a list of JavaScript tags that can be added to your pages to access reviews, your business data, or other Broadly custom embeds.
 5. Paste the embeds anywhere on the site where you want the content to show.
 6. That's it. Publish your site and see your reviews on the page natively!
+7. Web Chat is instantly enabled on your website.  To follow up with your new customers, download and install the Broadly Mobile App.
 
 If you need additional help, contact your Account Manager or Broadly Support at 1-800-727-0445 or support@broadly.com.
 
@@ -33,18 +35,18 @@ If you need additional help, contact your Account Manager or Broadly Support at 
 
 = Do I need a Broadly Account to use the Broadly for WordPress plugin? =
 
-Yes, Broadly for WordPress is a plugin for Broadly customers who use WordPress for their website. Broadly helps generate online reviews for your business, and the Broadly for WordPress plugin displays those reviews on your website natively. Native reviews help with the SEO of your website.
+Yes, Broadly for WordPress is a plugin for Broadly customers who use WordPress for their website.  Broadly’s intuitive mobile app allows your business to easily communicate with your customers.  Manage your online reputation and customer communications across SMS and email from any device, in real-time.
 
 = How do I get a Broadly Account? =
 
-Sign up for a demo from the Broadly website at http://broadly.com.
+Sign up for a demo from the Broadly website at https://broadly.com.
 
 = I'm having trouble, who do I contact? =
 
 Contact your Account Manager directly or contact Broadly support at either 1-800-727-0445 or support@broadly.com
 
 
-Learn more about Broadly at http://broadly.com.
+Learn more about Broadly at https://broadly.com.
 
 == Changelog ==
 
