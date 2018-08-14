@@ -50,6 +50,11 @@ Learn more about Broadly at https://broadly.com.
 
 == Changelog ==
 
+= 3.0.0 =
+Release Date: August 15, 2018
+
+* Introducing Web Chat!
+
 = 2.0.3 =
 Release Date: October 7, 2015
 
