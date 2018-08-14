@@ -68,7 +68,7 @@
     The Broadly Review Stream displays your most recent 4-star and 5-star reviews from Google, Facebook, Tripadvisor, and more. Follow the instructions below and add it to any page that you want to show your reviews.
   </p>
 	<?php if ( ! empty( $broadly_options['broadly_account_id'] ) ) { ?>
-    <iframe src="http://embed.broadly.com/<?php echo esc_html( $broadly_options['broadly_account_id'] ); ?>" i width="100%" height="700px"> </iframe>
+    <iframe src="https://embed.broadly.com/<?php echo esc_html( $broadly_options['broadly_account_id'] ); ?>" i width="100%" height="700px"> </iframe>
   <?php } ?>  
 
   <?php } ?>

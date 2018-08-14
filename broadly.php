@@ -84,7 +84,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 					$dataurl_match = $matches[1][$current_match];
 
 					// Append the data-url and build the embed URL
-					$broadly_embed_url = 'http://embed.broadly.com/' . $dataurl_match;
+					$broadly_embed_url = 'https://embed.broadly.com/' . $dataurl_match;
 
 					$args = array();
 					/**
