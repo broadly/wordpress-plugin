@@ -5,7 +5,6 @@ Requires at least: 3.0.1
 Stable tag: 3.0.0
 Tags: broadly, marketing, smb, CRM, reviews, webchat, chat, leads, messaging, customers
 
-
 == Description ==
 
 Broadly allows your business to easily communicate with your customers. Manage your online reputation and customer communications across SMS and email from any device, in real-time.
