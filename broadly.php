@@ -5,7 +5,7 @@ Description: Dynamic integration of your Broadly reviews within your existing Wo
 Plugin URL: http://broadly.com
 Author: Broadly
 Author URI: http://broadly.com/
-Version: 2.0.3
+Version: 3.0.0
 License: GPLv2 or later
 */
 
@@ -22,7 +22,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 	 */
 	class Broadly_Plugin {
 
-		public static $version = '2.0.3';
+		public static $version = '3.0.0';
 
 		function __construct() {
 			// Creating the admin menu
@@ -33,6 +33,9 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 
 			// Replace the Broadly scripts with the prefetched HTML
 			add_filter( 'the_content', array( $this, 'replace_js' ) );
+
+      // Inject webchat script in the header.
+			add_action('wp_head', array( $this, 'add_webchat' ) );
 		}
 
 		/**
@@ -81,7 +84,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 					$dataurl_match = $matches[1][$current_match];
 
 					// Append the data-url and build the embed URL
-					$broadly_embed_url = 'http://embed.broadly.com/' . $dataurl_match;
+					$broadly_embed_url = 'https://embed.broadly.com/' . $dataurl_match;
 
 					$args = array();
 					/**
@@ -148,6 +151,32 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 			$request_args['headers'] = $headers;
 
 			return $request_args;
+		}
+
+    private function get_account_id() {
+      $broadly_account_id = null;
+      $broadly_options    = get_option( 'broadly_options', array() );
+      if ( is_array( $broadly_options ) 
+        && ! empty( $broadly_options['broadly_account_id'] ) ) {
+        
+        $broadly_account_id = $broadly_options['broadly_account_id']; 
+      }
+
+      return $broadly_account_id;
+    }
+    
+		public function add_webchat() {
+      $broadly_account_id = $this->get_account_id();
+
+			if ( $broadly_account_id != null) {
+				$script  = '<script>'; 
+				$script .= '  window.broadlyChat = {';
+				$script .= '    id: "'.$broadly_account_id.'"';
+				$script .= '  };';
+				$script .= '</script>';
+				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async defer></script>';
+				echo $script;
+			}
 		}
 
 		/**
