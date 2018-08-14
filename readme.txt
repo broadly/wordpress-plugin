@@ -39,14 +39,15 @@ Yes, Broadly for WordPress is a plugin for Broadly customers who use WordPress f
 
 = How do I get a Broadly Account? =
 
-Sign up for a demo from the Broadly website at https://broadly.com.
+Sign up for a demo from the Broadly website at [https://broadly.com](https://broadly.com).
 
 = I'm having trouble, who do I contact? =
 
 Contact your Account Manager directly or contact Broadly support at either 1-800-727-0445 or support@broadly.com
 
 
-Learn more about Broadly at https://broadly.com.
+Learn more about Broadly at [https://broadly.com](https://broadly.com).
+
 
 == Changelog ==
 
