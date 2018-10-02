@@ -174,7 +174,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 				$script .= '    id: "'.$broadly_account_id.'"';
 				$script .= '  };';
 				$script .= '</script>';
-				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async defer></script>';
+				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async></script>';
 				echo $script;
 			}
 		}
