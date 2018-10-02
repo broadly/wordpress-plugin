@@ -22,7 +22,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 	 */
 	class Broadly_Plugin {
 
-		public static $version = '3.0.0';
+		public static $version = '3.0.1';
 
 		function __construct() {
 			// Creating the admin menu
@@ -169,12 +169,13 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
       $broadly_account_id = $this->get_account_id();
 
 			if ( $broadly_account_id != null) {
-				$script  = '<script>'; 
+				$script  = '<script>';
 				$script .= '  window.broadlyChat = {';
-				$script .= '    id: "'.$broadly_account_id.'"';
+				$script .= '    id: "'.$broadly_account_id.'",';
+				$script .= '    plugin: "'.$version.'"';
 				$script .= '  };';
 				$script .= '</script>';
-				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async defer></script>';
+				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async></script>';
 				echo $script;
 			}
 		}

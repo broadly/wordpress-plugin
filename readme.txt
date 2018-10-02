@@ -2,7 +2,7 @@
 Contributors: broadly
 Tested up to: 4.9.8
 Requires at least: 3.0.1
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 Tags: broadly, marketing, smb, CRM, reviews, webchat, chat, leads, messaging, customers
 
 
@@ -50,6 +50,11 @@ Learn more about Broadly at [https://broadly.com](https://broadly.com).
 
 
 == Changelog ==
+
+= 3.0.1 =
+Release Date: October 2, 2018
+
+* Performance improvements
 
 = 3.0.0 =
 Release Date: August 15, 2018
