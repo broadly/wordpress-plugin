@@ -22,7 +22,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 	 */
 	class Broadly_Plugin {
 
-		public static $version = '3.0.0';
+		public static $version = '3.0.1';
 
 		function __construct() {
 			// Creating the admin menu
