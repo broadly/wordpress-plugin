@@ -52,7 +52,7 @@ Learn more about Broadly at [https://broadly.com](https://broadly.com).
 == Changelog ==
 
 = 3.0.1 =
-Release Date: October 2, 2018
+Release Date: October 18, 2018
 
 * Performance improvements
 
