@@ -5,7 +5,7 @@ Description: Dynamic integration of your Broadly reviews within your existing Wo
 Plugin URL: http://broadly.com
 Author: Broadly
 Author URI: http://broadly.com/
-Version: 3.0.0
+Version: 3.0.1
 License: GPLv2 or later
 */
 
