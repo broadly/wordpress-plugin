@@ -109,13 +109,14 @@ cd $SVNPATH/trunk/
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 svn commit --username=$SVNUSER -m "$COMMITMSG"
 
-exit
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
 svn copy trunk/* tags/$NEWVERSION1/
 cd $SVNPATH/tags/$NEWVERSION1
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION1"
+
+exit
 
 echo "Tagging new version in git"
 cd $GITPATH
