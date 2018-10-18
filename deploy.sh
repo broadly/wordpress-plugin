@@ -86,7 +86,6 @@ if [ -n "$(git status --porcelain)" ];
 		echo "Push new version to git"
 		git push origin master
 fi
-exit
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
