@@ -75,7 +75,7 @@ if [ -d "$SVNPATH/tags/$NEWVERSION1" ]
 fi
 
 echo "Clearing svn trunk so we can overwrite it"
-svn rm $SVNPATH/trunk/*
+svn rm --force $SVNPATH/trunk/*
 
 # Check changes, git commit if needed
 echo -e "Enter a commit message for this new version: \c"
