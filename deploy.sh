@@ -88,7 +88,11 @@ if [ -n "$(git status --porcelain)" ];
 fi
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
-git checkout-index -a -f --prefix=$SVNPATH/trunk/
+git checkout-index -a -f --prefix=$SVNPATH/trunk/ -- \
+  readme.txt \
+  broadly.php \
+  settings-page.php \
+  settings.class.php
 
 exit
 
