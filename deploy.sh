@@ -78,11 +78,9 @@ echo "Clearing svn trunk so we can overwrite it"
 svn rm --force $SVNPATH/trunk/*
 
 # Check changes, git commit if needed
-echo -e "Enter a commit message for this new version: \c"
-read COMMITMSG
 if [ -n "$(git status --porcelain)" ];
 	then
-		git commit -am "$COMMITMSG"
+		git commit -am "$NEWVERSION1"
 		echo "Push new version to git"
 		git push origin master
 fi
@@ -107,12 +105,13 @@ echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
-svn commit --username=$SVNUSER -m "$COMMITMSG"
+svn commit --username=$SVNUSER -m "$NEWVERSION1"
 
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
-svn copy trunk tags/$NEWVERSION1 -m "$NEWVERSION1"
+svn copy ^/trunk ^/tags/$NEWVERSION1
+svn commit --username=$SVNUSER -m "$NEWVERSION1"
 
 exit
 
