@@ -113,8 +113,6 @@ cd $SVNPATH
 svn copy trunk tags/$NEWVERSION1
 svn commit --username=$SVNUSER -m "$NEWVERSION1"
 
-exit
-
 echo "Tagging new version in git"
 cd $GITPATH
 git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
