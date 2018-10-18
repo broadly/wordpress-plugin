@@ -94,9 +94,6 @@ git checkout-index -f --prefix=$SVNPATH/trunk/ -- \
   settings-page.php \
   settings.class.php
 
-exit
-
-
 # Confirm we got the plugin file to prevent blank releases
 if [ -f "$SVNPATH/trunk/$MAINFILE" ]
 then
@@ -106,18 +103,13 @@ else
 	exit 1;
 fi
 
-echo "Ignoring github specific files and deployment script"
-svn propset svn:ignore "deploy.sh
-DEVELOPMENT.md
-docker-compose.yml
-.git
-.gitignore" "$SVNPATH/trunk/"
-
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Add all new files that are not set to be ignored
 svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 svn commit --username=$SVNUSER -m "$COMMITMSG"
+
+exit
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
