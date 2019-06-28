@@ -172,7 +172,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 				$script  = '<script>';
 				$script .= '  window.broadlyChat = {';
 				$script .= '    id: "'.$broadly_account_id.'",';
-				$script .= '    plugin: "'.$version.'"';
+				$script .= '    plugin: "'.self::$version.'"';
 				$script .= '  };';
 				$script .= '</script>';
 				$script .= '<script src="https://chat.broadly.com/javascript/chat.js" async></script>';
