@@ -1,8 +1,8 @@
 === Broadly for WordPress ===
 Contributors: broadly
 Tested up to: 4.9.8
-Requires at least: 3.0.1
-Stable tag: 3.0.1
+Requires at least: 3.0.2
+Stable tag: 3.0.2
 Tags: broadly, marketing, smb, CRM, reviews, webchat, chat, leads, messaging, customers
 
 
@@ -50,6 +50,11 @@ Learn more about Broadly at [https://broadly.com](https://broadly.com).
 
 
 == Changelog ==
+
+= 3.0.2 =
+Release Date: November 27, 2019
+
+* fix bug related to self-version
 
 = 3.0.1 =
 Release Date: October 18, 2018
