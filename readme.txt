@@ -1,8 +1,8 @@
 === Broadly for WordPress ===
 Contributors: broadly
 Tested up to: 5.3
-Requires at least: 3.0.2
-Stable tag: 3.0.2
+Requires at least: 3.0.3
+Stable tag: 3.0.3
 Tags: broadly, marketing, smb, CRM, reviews, webchat, chat, leads, messaging, customers
 
 
