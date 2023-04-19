@@ -2,10 +2,10 @@
 /*
 Plugin Name: Broadly for WordPress
 Description: Dynamic integration of your Broadly reviews within your existing WordPress website.
-Plugin URL: http://broadly.com
+Plugin URL: http://www.broadly.com
 Author: Broadly
-Author URI: http://broadly.com/
-Version: 3.0.2
+Author URI: http://www.broadly.com/
+Version: 3.0.3
 License: GPLv2 or later
 */
 
@@ -22,7 +22,7 @@ if ( ! class_exists( 'Broadly_Plugin' ) ) {
 	 */
 	class Broadly_Plugin {
 
-		public static $version = '3.0.2';
+		public static $version = '3.0.3';
 
 		function __construct() {
 			// Creating the admin menu
